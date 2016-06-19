@@ -1,18 +1,57 @@
 <html>
   <head>
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js" integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+  integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="
+            crossorigin="anonymous"></script>
+    <style media="screen" type="text/css">
+
+     #book-title {
+       margin-bottom: 20px;
+       display: block;
+       width: 90%;
+       height: 50px;
+       border: 1px solid #999999;
+       padding: 5px;
+       font-size: 24px;
+     }
+
+     #search button {
+       font-size:24px;
+     }
+
+     #inner {
+       background-color: orange;
+       padding: 20px;
+       width: 60%;
+       margin: 100px auto 0 auto;
+     }
+    </style>
   </head>
   <body>
-    <h1>Magic Bookshelf</h1>
-    <form id="search">
-      <input placeholder="Type a book title..." pattern=".{3,}" required title="Type at least 3 letters from the title.">
-      <button type="submit">Submit</button>
-    </form>
-    <div id="result">
-      <span class="result-msg"></span>
+    <div>
+      <div id="inner">
+        <h1>Magic Bookshelf</h1>
+        <form id="search">
+          <input id="book-title" placeholder="What book do you want to find?" pattern=".{3,}" required title="Type at least 3 letters from the title.">
+          <button type="submit">Search!</button>
+        </form>
+        <div id="result">
+          <span class="result-msg"></span>
+        </div>
+      </div>
     </div>
-
     <script>
+
+     function resizeInput() {
+       $(this).attr('size', $(this).val().length);
+     }
+
+     $('input[type="text"]')
+       // event handler
+              .keyup(resizeInput)
+       // resize on page load
+              .each(resizeInput);
+     
      var host = 'raspbarry';
      var searchUrl = 'http://' + host + ':5000/book/?title='
 
@@ -40,7 +79,7 @@
            displayResult(book);
          },
          error:function (xhr, ajaxOptions, thrownError){
-           $('.result-msg').text('No book found with that title, try searching again.');
+           $('.result-msg').text('Sorry the Magic Bookshelf doesn\'t have a book called ' + title + ', try searching again.');
          }
        });
        e.preventDefault();
