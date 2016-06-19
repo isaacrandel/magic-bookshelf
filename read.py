@@ -8,6 +8,7 @@ from termcolor import (
 import time
 import urlparse
 
+import espeak
 from pirc522 import RFID
 import requests
 
@@ -40,13 +41,12 @@ print('Waiting for books...')
 
 curr_uid = None
 
+es = espeak.ESpeak()
+
 while run:
     (error, data) = rdr.request()
     if not error:
         print("\nDetected: " + format(data, "02x"))
-    else:
-	pass
-        #print("\nError: %s, %s" % (error, data))
     (error, uid) = rdr.anticoll()
     if not error:
         suid = '-'.join(str(seg) for seg in uid)
@@ -67,10 +67,12 @@ while run:
                 checkin_url = urlparse.urljoin(API_CHECKIN, suid)
                 requests.get(checkin_url)
                 cprint(colored('Checked-in: %s' % book['title']), 'green')
+                es.say('Checked in %s by %s' % (book['title'], book['author']))
             else:
                 checkout_url = urlparse.urljoin(API_CHECKOUT, suid)
                 requests.get(checkout_url)
                 cprint(colored('Checked-out: %s' % book['title']), 'red')
+                es.say('Checked out %s by %s' % (book['title'], book['author']))
             curr_uid = suid
 
         util.set_tag(uid)
