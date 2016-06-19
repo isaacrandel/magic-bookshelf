@@ -3,4 +3,4 @@ SPI-Py==1.0
 argparse==1.2.1
 wsgiref==0.1.2
 requests==2.10.0
-
+termcolor==1.1.0
