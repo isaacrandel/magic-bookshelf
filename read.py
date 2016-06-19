@@ -18,7 +18,7 @@ util = rdr.util()
 util.debug = True
 
 API_ROOT = 'http://localhost:5000/'
-API_BOOK = API_ROOT + 'book/'
+API_BOOK = API_ROOT + 'book/?uid='
 API_CHECKIN = API_ROOT + 'checkin/'
 API_CHECKOUT = API_ROOT + 'checkout/'
 
@@ -53,7 +53,7 @@ while run:
         print("Card read UID: %s" % suid)
         #if curr_uid != suid and suid != None:
         print('New card detected: %s' % suid)
-        retrieve_url = urlparse.urljoin(API_BOOK, suid)
+        retrieve_url = API_BOOK + suid
         print('Getting book from: %s' % retrieve_url)
         response = requests.get(retrieve_url)
 
