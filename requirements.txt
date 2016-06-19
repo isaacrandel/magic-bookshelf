@@ -1,0 +1,4 @@
+RPi.GPIO==0.6.2
+SPI-Py==1.0
+argparse==1.2.1
+wsgiref==0.1.2
