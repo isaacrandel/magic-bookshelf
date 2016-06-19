@@ -21,11 +21,11 @@ while run:
     if not error:
         print ("\nDetected: " + format(data, "02x"))
     else:
-	pass 
+	pass
         #print("\nError: %s, %s" % (error, data))
     (error, uid) = rdr.anticoll()
     if not error:
-        print ("Card read UID: "+str(uid[0])+","+str(uid[1])+","+str(uid[2])+","+str(uid[3]))
+        print ("Card read UID: %s" % '-'.join(str(seg) for seg in uid))
 
         print ("Setting tag")
         util.set_tag(uid)
@@ -36,5 +36,5 @@ while run:
         util.read_out(4)
         print ("\nDeauthorizing")
         util.deauth()
-        
+
         time.sleep(1)
