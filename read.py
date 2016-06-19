@@ -36,7 +36,7 @@ def end_read(signal,frame):
 
 signal.signal(signal.SIGINT, end_read)
 
-print(banner('Magicbookshelf RFID Controller'))
+print(banner('Magic Bookshelf RFID Controller'))
 print('Waiting for books...')
 
 curr_uid = None

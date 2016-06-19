@@ -35,6 +35,15 @@ def retrieve_book_by_uid(uid, conn=None):
         return None
 
 
+def retrieve_book_by_title(title, conn=None):
+    query = "SELECT * FROM Book WHERE title LIKE :title"
+    (book, _) = _execute(query, ['%'+title+'%'], conn=conn)
+    if book:
+        return dict(book)
+    else:
+        return None
+
+
 def checkin(book, conn=None):
     uid = book['uid']
     query = "UPDATE Book SET checkedin=1 WHERE uid=:uid"

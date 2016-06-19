@@ -1,17 +1,49 @@
-
 <html>
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/2.0.0/superagent.js"></script>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js" integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
   </head>
   <body>
     <h1>Magic Bookshelf</h1>
+    <form id="search">
+      <input placeholder="Type a book title..." pattern=".{3,}" required title="Type at least 3 letters from the title.">
+      <button type="submit">Submit</button>
+    </form>
+    <div id="result">
+      <span class="result-msg"></span>
+    </div>
+
     <script>
-     var request = require('superagent');
-     
-     request
-     .get('/books/')
-     .end(function(err, res){
-       console.log(res);
+     var host = 'raspbarry';
+     var searchUrl = 'http://' + host + ':5000/book/?title='
+
+     var bookStatus = function(book) {
+       if (book['checkedin'] == 0) {
+         return 'checked in'
+       } else {
+         return 'checked out'
+       }
+     }
+
+     var displayResult = function(book) {
+       var status = bookStatus(book);
+       var msg = book['title'] + ' by ' + book['author'] + ' is ' + status + '.';
+
+       $('.result-msg').text(msg);
+     };
+
+     $('#search').submit(function(e) {
+       var title = $('input:first').val();
+       $.ajax({
+         type: 'get',
+         url: searchUrl + title,
+         success: function(book, textStatus, XMLHttpRequest){
+           displayResult(book);
+         },
+         error:function (xhr, ajaxOptions, thrownError){
+           $('.result-msg').text('No book found with that title, try searching again.');
+         }
+       });
+       e.preventDefault();
      });
     </script>
   </body>

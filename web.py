@@ -4,6 +4,7 @@ from flask import (
     abort,
     Flask,
     jsonify,
+    request,
     send_from_directory
 )
 
@@ -20,9 +21,18 @@ def root():
     return send_from_directory(static_dir, 'index.html')
 
 
-@app.route('/book/<uid>')
-def book_by_uid(uid):
-    book = store.retrieve_book_by_uid(uid)
+@app.route('/book/')
+def book_by_uid_or_title():
+    uid = request.args.get('uid')
+    title = request.args.get('title')
+
+    if uid:
+        book = store.retrieve_book_by_uid(uid)
+    elif title:
+        book = store.retrieve_book_by_title(title)
+    else:
+        abort(400)
+
     if book:
         return jsonify(**book)
     else:
