@@ -16,7 +16,7 @@
      }
 
      #search button {
-       font-size:24px;
+       font-size: 30px;
      }
 
      #inner {
@@ -25,15 +25,25 @@
        width: 60%;
        margin: 100px auto 0 auto;
      }
+     
+     #searching-box {
+       float: right;
+     }
+
+     .result-msg {
+       color: white;
+       font-size: 30px;
+     }
     </style>
   </head>
   <body>
     <div>
       <div id="inner">
+        <div id="searching-box">searching...</div>
         <h1>Magic Bookshelf</h1>
         <form id="search">
           <input id="book-title" placeholder="What book do you want to find?" pattern=".{3,}" required title="Type at least 3 letters from the title.">
-          <button type="submit">Search!</button>
+          <button type="submit">Search</button>
         </form>
         <div id="result">
           <span class="result-msg"></span>
@@ -42,24 +52,22 @@
     </div>
     <script>
 
-     function resizeInput() {
-       $(this).attr('size', $(this).val().length);
-     }
+     var $searching = $('#searching-box').hide();
 
-     $('input[type="text"]')
-       // event handler
-              .keyup(resizeInput)
-       // resize on page load
-              .each(resizeInput);
-     
+     $(document).ajaxStart(function () {
+       $searching.show();
+     }) .ajaxStop(function () {
+       $searching.hide();
+     });
+
      var host = 'raspbarry';
      var searchUrl = 'http://' + host + ':5000/book/?title='
 
      var bookStatus = function(book) {
        if (book['checkedin'] == 0) {
-         return 'checked in'
+         return 'checked in to shelf 1'
        } else {
-         return 'checked out'
+         return 'checked out from shelf 1'
        }
      }
 
