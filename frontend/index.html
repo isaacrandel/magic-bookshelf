@@ -64,10 +64,10 @@
      var searchUrl = 'http://' + host + ':5000/book/?title='
 
      var bookStatus = function(book) {
-       if (book['checkedin'] == 0) {
-         return 'checked in to shelf 1'
-       } else {
+       if (book['checkedin'] === 0) {
          return 'checked out from shelf 1'
+       } else {
+         return 'checked in to shelf 1'
        }
      }
 
