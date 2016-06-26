@@ -1,9 +1,14 @@
 <html>
   <head>
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+    <script src="files/jquery-3.0.0.min.js"
   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="
             crossorigin="anonymous"></script>
     <style media="screen" type="text/css">
+      body {
+        background-color: black;
+	background-image: url('files/stars.gif');
+	background-repeat: repeat;	
+     }
 
      #book-title {
        margin-bottom: 20px;
@@ -20,7 +25,8 @@
      }
 
      #inner {
-       background-color: orange;
+      background-color: gold;
+      opacity: 0.8;
        padding: 20px;
        width: 60%;
        margin: 100px auto 0 auto;
@@ -60,7 +66,7 @@
        $searching.hide();
      });
 
-     var host = 'raspbarry';
+     var host = 'localhost';
      var searchUrl = 'http://' + host + ':5000/book/?title='
 
      var bookStatus = function(book) {

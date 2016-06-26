@@ -5,7 +5,7 @@ from flask import (
     Flask,
     jsonify,
     request,
-    send_from_directory
+    send_from_directory,
 )
 
 import store
@@ -18,7 +18,7 @@ app = Flask(__name__)
 def root():
     root_dir = os.getcwd()
     static_dir = os.path.join(root_dir, 'frontend')
-    return send_from_directory(static_dir, 'index.html')
+    return send_from_directory('static', 'index.html')
 
 
 @app.route('/book/')
