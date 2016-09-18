@@ -7,7 +7,9 @@ The code in this repository is for my Magic Bookshelf (https://youtu.be/RsUnRipk
 pip install -r requirements.txt
 make schema
 ```
-  
+
+There's no interface for adding books to the database, but you can add them using `store.store_book` in a python shell.
+
 ## Running the controller
 
 `make run-controller`
